@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Naila Homestay - Penginapan Nyaman & Strategis",
   description: "Cari homestay murah di Banyuwangi? Naila Homestay menyediakan AC, WiFi, & parkir luas. Hanya 19 km dari Watu Dodol. Booking sekarang untuk kenyamanan maksimal!",
   keywords: ["homestay banyuwangi", "penginapan murah banyuwangi", "guest house banyuwangi", "penginapan di banyuwangi", "penginapan bwi", "penginapan dekat watu dodol", "homestay keluarga banyuwangi"],
+  verification: {
+    google: "CFZOB-0xIZEje6a3ojlCqDmqlTutEtXPCYA3AOoySfE",
+  },
   openGraph: {
     title: 'Naila Homestay Banyuwangi',
     description: 'Penginapan nyaman dan estetik di Banyuwangi.',
