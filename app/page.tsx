@@ -2,8 +2,27 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { MapPin, Wifi, Coffee, Car, ShowerHead, Star, Phone, Award, WavesLadder, Pin, PinIcon, Mic2, Mic, Mic2Icon, BedIcon, UserLock, Leaf, ChevronLast, ChevronFirst } from 'lucide-react';
+import { MapPin, Wifi, Coffee, Car, ShowerHead, Star, Phone, Award, WavesLadder, Pin, PinIcon, Mic2, Mic, Mic2Icon, BedIcon, UserLock, Leaf, ChevronLast, ChevronFirst, X, XIcon } from 'lucide-react';
 import { useState } from 'react';
+
+const InstagramIcon = ({ size = 20, className = "" }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+);
 
 const colors = {
   gold: "text-[#D4AF37]",
@@ -32,6 +51,7 @@ const ulasan = [
 
 export default function LandingPageLuxury() {
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 4; // Menampilkan 4 card per halaman (2 baris di desktop)
   const totalPages = Math.ceil(ulasan.length / reviewsPerPage);
@@ -43,19 +63,62 @@ export default function LandingPageLuxury() {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 overflow-x-hidden">
       
-      {/* 1. Navigasi - Transparan & Blur (Modern) */}
-      <nav className="fixed top-0 z-50 w-full bg-white/90 backdrop-blur-sm border-b border-slate-100 shadow-sm">
+      <nav className="fixed top-0 z-[100] w-full bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between">
+          
+          {/* Logo */}
           <div className="flex items-center gap-2">
             <Award className={`${colors.gold}`} size={30} />
             <h1 className="text-2xl font-extrabold tracking-tighter text-slate-950">
               Naila<span className={`${colors.gold}`}>Homestay</span>
             </h1>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden md:block text-sm font-medium text-slate-600">Premium Stay in Banyuwangi</span>
-            <a href="https://wa.me/628123456789" className={`${colors.bgGold} text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all duration-300 transform hover:-translate-y-0.5 text-sm`}>
-              <Phone size={18} /> Booking Now
+
+          {/* Navigasi Desktop */}
+          <div className="hidden lg:flex items-center gap-8">
+            <a href="#about" className="text-sm font-semibold text-slate-600 hover:text-[#D4AF37] transition-colors">Tentang Kami</a>
+            <a href="#fasilitas" className="text-sm font-semibold text-slate-600 hover:text-[#D4AF37] transition-colors">Fasilitas</a>
+            <a href="#pricelist" className="text-sm font-semibold text-slate-600 hover:text-[#D4AF37] transition-colors">Pricelist</a>
+            <a href="#ulasan" className="text-sm font-semibold text-slate-600 hover:text-[#D4AF37] transition-colors">Testimoni</a>
+            
+            <div className="h-6 w-[1px] bg-slate-200 mx-2"></div>
+
+            <a 
+              href="https://wa.me/+6282142821206?text=Halo%20Naila%20Homestay,%20saya%20ingin%20tanya%20ketersediaan%20kamar." 
+              target="_blank"
+              className={`${colors.bgGold} text-white px-6 py-2.5 rounded-full font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-[#D4AF37]/30 transition-all duration-300 transform hover:-translate-y-0.5 text-sm`}
+            >
+              <Phone size={16} /> Booking Now
+            </a>
+          </div>
+
+          {/* Mobile Toggle Button */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden p-2 text-slate-600 hover:text-[#D4AF37] transition-colors"
+          >
+            {isMenuOpen ? <XIcon size={28} /> : (
+              <div className="space-y-1.5">
+                <div className="w-6 h-0.5 bg-current"></div>
+                <div className="w-6 h-0.5 bg-current"></div>
+                <div className="w-4 h-0.5 bg-current ml-auto"></div>
+              </div>
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-100 transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-96 opacity-100 py-6' : 'max-h-0 opacity-0 py-0'}`}>
+          <div className="px-6 flex flex-col items-center justify-center gap-6">
+            <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-slate-800">Tentang Kami</a>
+            <a href="#fasilitas" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-slate-800">Fasilitas</a>
+            <a href="#pricelist" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-slate-800">Pricelist</a>
+            <a href="#ulasan" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-slate-800">Testimoni</a>
+            <a 
+              href="https://wa.me/6282142821206?text=Halo%20Naila%20Homestay,%20saya%20ingin%20tanya%20ketersediaan%20kamar." 
+              className={`${colors.bgGold} text-white w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-3 text-center`}
+            >
+              <Phone size={20} /> Pesan Kamar Sekarang
             </a>
           </div>
         </div>
@@ -211,7 +274,7 @@ export default function LandingPageLuxury() {
                   <p className="flex items-center gap-3"><Star size={16} className={colors.gold} /> Perlengkapan Mandi & Handuk</p>
                   <p className="flex items-center gap-3 font-black"><Star size={16} className={colors.gold} /> Free Wifi, Air Mineral, Tea & Coffe</p>
                 </div>
-                <a href="https://wa.me/628123456789?text=Halo%20Naila%20Homestay,%20saya%20mau%20pesan%20Paket%20Deluxe%20Gold" className={`block w-full text-center bg-slate-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-slate-800 transition`}>
+                <a href="https://wa.me/+6282142821206?text=Halo%20Naila%20Homestay,%20saya%20mau%20pesan%20Ruang%202%20" className={`block w-full text-center bg-slate-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-slate-800 transition`}>
                   Pesan Sekarang!
                 </a>
               </div>
@@ -245,7 +308,7 @@ export default function LandingPageLuxury() {
                     <p className="flex items-center gap-3"><Star size={16} className={colors.gold} /> Perlengkapan Mandi & Handuk</p>
                     <p className="flex items-center gap-3 font-black"><Star size={16} className={colors.gold} /> Free Wifi, Air Mineral, Tea & Coffe</p>
                   </div>
-                  <a href="https://wa.me/628123456789?text=Halo%20Naila%20Homestay,%20saya%20mau%20pesan%20Paket%20Royal%20Platinum" className={`block w-full text-center ${colors.bgGold} text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-[#D4AF37]/30 transition`}>
+                  <a href="https://wa.me/+6282142821206?text=Halo%20Naila%20Homestay,%20saya%20mau%20pesan%20Ruang%201%20" className={`block w-full text-center ${colors.bgGold} text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-[#D4AF37]/30 transition`}>
                     Pesan Sekarang!
                   </a>
                 </div>
@@ -340,87 +403,80 @@ export default function LandingPageLuxury() {
       </main>
 
       {/* 7. Footer - Dark & Gold Elegant */}
-      <footer className="bg-slate-950 text-white pt-20 pb-10 px-6 mt-16 border-t-4 border-[#D4AF37] relative overflow-hidden">
-  {/* Dekorasi Cahaya Gold Halus di Sudut */}
-  <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-3xl"></div>
+      <footer className="bg-slate-950 text-white pt-20 pb-10 px-6 md:px-10 mt-16 border-t-4 border-[#D4AF37] relative overflow-hidden">
+        {/* Dekorasi Cahaya Gold Halus di Sudut */}
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-3xl"></div>
 
-  <div className="max-w-7xl mx-auto">
-    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-      
-      {/* Kolom 1: Branding */}
-      <div className="space-y-6">
-        <div className="flex items-center gap-2 justify-center md:justify-start">
-          <Award className={`${colors.gold}`} size={28} />
-          <h4 className="text-2xl font-bold tracking-tighter">Naila<span className={`${colors.gold}`}>Homestay</span></h4>
-        </div>
-        <p className="text-slate-400 italic text-sm font-light leading-relaxed">
-          "Ruang singgah pilihan untuk setiap perjalanan seru. Menghadirkan kenyamanan dan kehangatan di tengah indahnya Banyuwangi."
-        </p>
-        <div className="flex gap-4 justify-center md:justify-start">
-          {/* Kamu bisa tambah icon sosmed di sini */}
-          <div className={`p-2 rounded-lg bg-slate-900 border border-slate-800 ${colors.gold} hover:border-[#D4AF37] transition-colors cursor-pointer`}>
-            <Phone size={18} />
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+            
+            {/* Kolom 1: Branding */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 justify-center md:justify-start">
+                <Award className={`${colors.gold}`} size={28} />
+                <h4 className="text-2xl font-bold tracking-tighter">Naila<span className={`${colors.gold}`}>Homestay</span></h4>
+              </div>
+              <p className="text-slate-400 italic text-sm font-light leading-relaxed">
+                "Ruang singgah pilihan untuk setiap perjalanan seru. Menghadirkan kenyamanan dan kehangatan di tengah indahnya Banyuwangi."
+              </p>
+            </div>
+
+            {/* Kolom 2: Navigasi Cepat */}
+            <div>
+              <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Navigasi</h5>
+              <ul className="space-y-4">
+                <li><a href="#about" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Tentang Kami</a></li>
+                <li><a href="#fasilitas" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Fasilitas Ruang</a></li>
+                <li><a href="#pricelist" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Pilihan Kamar</a></li>
+                <li><a href="#ulasan" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Cerita Tamu</a></li>
+              </ul>
+            </div>
+
+            {/* Kolom 3: Kontak Detail */}
+            <div className="space-y-6">
+              <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Kontak</h5>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4 text-slate-400 group">
+                  <MapPin size={20} className={`${colors.gold} shrink-0`} />
+                  <span className="text-sm group-hover:text-white transition-colors">Jl. Kemuning, Watubuncul, Boyolangu, Kec. Giri, Kabupaten Banyuwangi, Jawa Timur 68424</span>
+                </div>
+                <div className="flex items-center gap-4 text-slate-400 group">
+                  <Phone size={20} className={`${colors.gold} shrink-0`} />
+                  <span className="text-sm group-hover:text-white transition-colors">+62 821 4282 1206 </span>
+                </div>
+                <div className="flex items-center gap-4 text-slate-400 group">
+                  <InstagramIcon className={`${colors.gold} shrink-0`}/>
+                  <span className="text-sm group-hover:text-white transition-colors">@nailahomestaybwi</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Kolom 4: Google Maps Embed */}
+            <div className="space-y-4">
+              <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Lokasi Kami</h5>
+              <div className="w-full h-48 rounded-2xl overflow-hidden border-2 border-slate-800 hover:border-[#D4AF37]/50 transition-all shadow-lg">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126365.97732863355!2d114.21231764908845!3d-8.209111696176087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd14500336151cf%3A0xbddbb11628b4abf8!2sNaila%20homestay!5e0!3m2!1sid!2sid!4v1777179241924!5m2!1sid!2sid" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <p className="text-[10px] text-slate-500 text-center md:text-left italic">
+                Klik peta untuk petunjuk arah
+              </p>
+            </div>
+
+          </div>
+
+          {/* Baris Bawah */}
+          <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-center items-center gap-4 text-slate-500 text-[10px] uppercase tracking-[0.2em]">
+            <p>&copy; {new Date().getFullYear()} Naila Homestay. Crafted with pride.</p>
           </div>
         </div>
-      </div>
-
-      {/* Kolom 2: Navigasi Cepat */}
-      <div>
-        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Navigasi</h5>
-        <ul className="space-y-4">
-          <li><a href="#about" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Tentang Kami</a></li>
-          <li><a href="#fasilitas" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Fasilitas Ruang</a></li>
-          <li><a href="#pricelist" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Pilihan Kamar</a></li>
-          <li><a href="#ulasan" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Cerita Tamu</a></li>
-        </ul>
-      </div>
-
-      {/* Kolom 3: Kontak Detail */}
-      <div className="space-y-6">
-        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Kontak</h5>
-        <div className="space-y-4">
-          <div className="flex items-start gap-4 text-slate-400 group">
-            <MapPin size={20} className={`${colors.gold} shrink-0`} />
-            <span className="text-sm group-hover:text-white transition-colors">Jl. Kemuning, Boyolangu, Banyuwangi, Jawa Timur</span>
-          </div>
-          <div className="flex items-center gap-4 text-slate-400 group">
-            <Phone size={20} className={`${colors.gold} shrink-0`} />
-            <span className="text-sm group-hover:text-white transition-colors">+62 812 3456 789</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Kolom 4: Google Maps Embed */}
-      <div className="space-y-4">
-        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Lokasi Kami</h5>
-        <div className="w-full h-48 rounded-2xl overflow-hidden border-2 border-slate-800 hover:border-[#D4AF37]/50 transition-all shadow-lg">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126365.97732863355!2d114.21231764908845!3d-8.209111696176087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd14500336151cf%3A0xbddbb11628b4abf8!2sNaila%20homestay!5e0!3m2!1sid!2sid!4v1777179241924!5m2!1sid!2sid" 
-            width="100%" 
-            height="100%" 
-            style={{ border: 0 }} 
-            allowFullScreen="" 
-            loading="lazy" 
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-        <p className="text-[10px] text-slate-500 text-center md:text-left italic">
-          Klik peta untuk petunjuk arah
-        </p>
-      </div>
-
-    </div>
-
-    {/* Baris Bawah */}
-    <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] uppercase tracking-[0.2em]">
-      <p>&copy; {new Date().getFullYear()} Naila Homestay. Crafted with pride.</p>
-      <div className="flex gap-6">
-        <a href="#" className="hover:text-[#D4AF37]">Privacy Policy</a>
-        <a href="#" className="hover:text-[#D4AF37]">Terms of Service</a>
-      </div>
-    </div>
-  </div>
-</footer>
+      </footer>
     </div>
   );
 }
