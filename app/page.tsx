@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
-import { MapPin, Wifi, Coffee, Car, ShowerHead, Star, Phone, Award, WavesLadder, Pin, PinIcon, Mic2, Mic, Mic2Icon, BedIcon, UserLock, Leaf } from 'lucide-react';
+import { MapPin, Wifi, Coffee, Car, ShowerHead, Star, Phone, Award, WavesLadder, Pin, PinIcon, Mic2, Mic, Mic2Icon, BedIcon, UserLock, Leaf, ChevronLast, ChevronFirst } from 'lucide-react';
+import { useState } from 'react';
 
-// Definisi Warna & Gaya Statis untuk Kemudahan Maintenance
 const colors = {
   gold: "text-[#D4AF37]",
   bgGold: "bg-[#D4AF37]",
@@ -18,12 +20,26 @@ const fasilitas = [
 ];
 
 const ulasan = [
-  { name: "Andini Putri", rating: 5, text: "Gak nyangka nemu homestay se-estetik ini di Jember. Pelayanan juara, kamarnya mewah banget!", date: "10 Feb 2026" },
-  { name: "Budi Santoso", rating: 5, text: "Fasilitas lengkap, parkir luas, dan sarapannya enak. Sangat direkomendasikan untuk keluarga.", date: "05 Feb 2026" },
-  { name: "Citra Dewi", rating: 4, text: "Desain interiornya modern, konsep gold white-nya dapet banget kemewahannya. Dekat pusat kota pula.", date: "01 Feb 2026" },
+  { name: "Bambang Usodo", rating: 5, text: "Homestay nya nyaman banget, bersih, pelayanannya two tumbs up...ramah banget... Lengkap dg mushola, kolam renang, plus toiletnya super duper bersih. Homestay yg sangat recomended...", date: "Feb 2026" },
+  { name: "Kristyanti RIni", rating: 5, text: "Homestay yang nyaman , bersih, fasilitas lengkap, owner nya ramah,harga terjangkau,berasa di rumah sendiri 🙏🙏🙏", date: "Jan 2026" },
+  { name: "Tri Surya", rating: 5, text: "Tempatnya nyaman, kamar bersih, pemilik ramah dan fasilitas lengkap ada karaoke dan mushola. pokoknya recommended 👍", date: "Feb 2026" },
+  { name: "Mas Sungkono", rating: 5, text: "Homestay nyaman untuk liburan, anti kebisingan kendaraan namun akses ke kota sangat dekat dan mudah. Searah dengan wisata kawah ijen, kalibendo, jagir dll. Fasilitas lengkap, karaoke, coffeeshop, kolam renang", date: "Des 2025" },
+  { name: "RIF'AN AZMI", rating: 5, text: "Homestay 3 lantai dg beberapa kamar,dg fasilitas kolam renang ,karaoke room , mushola , kamar mandi dalam dan luar dll", date: "Nov 2025" },
+  { name: "Dewi Marmiah", rating: 5, text: "Tempat nyaman,bersih,pelayanan ramah,sangat puas menginap di Naila homestay", date: "Jan 2026" },
+  { name: "Adelisa Adzkia", rating: 5, text: "Homestay nyaman,adem dn cocok untuk liburan di Banyuwangi..", date: "Jan 2026" },
+  { name: "Wahyu Ryan Refany", rating: 5, text: "Homestai yang nyaman untuk istirahat", date: "Des 2025" },
 ];
 
 export default function LandingPageLuxury() {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const reviewsPerPage = 4; // Menampilkan 4 card per halaman (2 baris di desktop)
+  const totalPages = Math.ceil(ulasan.length / reviewsPerPage);
+  const indexOfLastReview = currentPage * reviewsPerPage;
+  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+  const currentReviews = ulasan.slice(indexOfFirstReview, indexOfLastReview);
+
+
   return (
     <div className="min-h-screen bg-white font-sans text-slate-900 overflow-x-hidden">
       
@@ -82,7 +98,7 @@ export default function LandingPageLuxury() {
 
         {/* 3. About Section - Split Layout */}
         <section id="about" className="py-24 px-6 md:px-10 bg-white">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-[4/4] rounded-3xl overflow-hidden shadow-2xl shadow-slate-200 border-4 border-white group">
               <Image 
                 src="/about-image.jpg"
@@ -239,38 +255,84 @@ export default function LandingPageLuxury() {
           </div>
         </section>
 
-        {/* 6. Rating & Ulasan - Elegant Grid */}
-        <section id="ulasan" className="py-24 px-6 bg-slate-50/50">
+        <section id="ulasan" className="py-24 px-6 md:px-10 bg-slate-50/50">
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-[1fr,2fr] gap-16 items-center">
+              
+              {/* Bagian Kiri - Kalimat Tetap */}
               <div className="text-center lg:text-left">
                 <span className={`${colors.gold} font-bold tracking-widest uppercase text-sm mb-3 block`}>Testimoni</span>
                 <h3 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-slate-950">Apa Kata Tamu Kami?</h3>
                 <p className="text-lg text-slate-600 font-light mb-8">Kepuasan Anda adalah prioritas kami. Lihat pengalaman nyata dari tamu yang pernah menginap.</p>
                 <div className="inline-flex items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
-                  <div className="flex gap-1 text-[#FFD700]"> {/* Warna Bintang Emas Terang */}
+                  <div className="flex gap-1 text-[#FFD700]">
                     {[...Array(5)].map((_, i) => <Star key={i} fill="#FFD700" size={24} />)}
                   </div>
-                  <p className="text-3xl font-extrabold text-slate-950">4.9<span className="text-lg text-slate-500 font-medium">/5.0</span></p>
+                  <p className="text-3xl font-extrabold text-slate-950">5.0<span className="text-lg text-slate-500 font-medium">/5.0</span></p>
                 </div>
               </div>
               
-              <div className="grid sm:grid-cols-2 gap-8">
-                {ulasan.map((item, idx) => (
-                  <div key={idx} className={`bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-5 ${idx === 2 ? 'sm:col-span-2' : ''}`}>
-                    <div className="flex justify-between items-center">
-                      <p className="font-semibold text-slate-900">{item.name}</p>
-                      <p className="text-xs text-slate-400">{item.date}</p>
+              {/* Bagian Kanan - Card & Pagination */}
+              <div className="space-y-10">
+                <div className="grid sm:grid-cols-2 gap-8">
+                  {currentReviews.map((item, idx) => (
+                    <div 
+                      key={idx} 
+                      className="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:border-amber-200"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 font-bold text-xs uppercase">
+                              {item.name.substring(0, 2)}
+                            </div>
+                            <div>
+                              <p className="font-bold text-slate-900 leading-none">{item.name}</p>
+                              <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-widest font-medium">{item.date}</p>
+                            </div>
+                          </div>
+                          <div className="flex gap-0.5 text-[#FFD700]">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} size={14} fill={i < item.rating ? "#FFD700" : "none"} strokeWidth={i < item.rating ? 0 : 2} className={i < item.rating ? "" : "text-slate-200"} />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-slate-600 font-light text-sm leading-relaxed">"{item.text}"</p>
+                      </div>
                     </div>
-                    <div className="flex gap-0.5 text-[#FFD700]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={16} fill={i < item.rating ? "#FFD700" : "none"} className={i < item.rating ? "" : "text-slate-200"} />
-                      ))}
-                    </div>
-                    <p className="text-slate-700 font-light text-sm leading-relaxed italic">"{item.text}"</p>
+                  ))}
+                </div>
+
+                {/* Kontrol Pagination */}
+                <div className="flex items-center justify-center lg:justify-start gap-3">
+                  <button 
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                    className={`p-3 rounded-full border transition-all ${currentPage === 1 ? 'text-slate-300 border-slate-100' : 'text-slate-600 border-slate-200 hover:bg-white hover:shadow-md'}`}
+                  >
+                    <ChevronFirst size={20} />
+                  </button>
+                  
+                  <div className="flex gap-2">
+                    {[...Array(totalPages)].map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${currentPage === i + 1 ? `${colors.bgGold} w-8` : 'bg-slate-200'}`}
+                      />
+                    ))}
                   </div>
-                ))}
+
+                  <button 
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                    className={`p-3 rounded-full border transition-all ${currentPage === totalPages ? 'text-slate-300 border-slate-100' : 'text-slate-600 border-slate-200 hover:bg-white hover:shadow-md'}`}
+                  >
+                    <ChevronLast size={20} />
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
@@ -278,39 +340,87 @@ export default function LandingPageLuxury() {
       </main>
 
       {/* 7. Footer - Dark & Gold Elegant */}
-      <footer className="bg-slate-950 text-white py-20 px-6 mt-16 border-t-4 border-[#D4AF37]">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 text-center md:text-left">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 justify-center md:justify-start">
-              <Award className={`${colors.gold}`} size={24} />
-              <h4 className="text-xl font-bold tracking-tighter">Naila<span className={`${colors.gold}`}>Homestay</span></h4>
-            </div>
-            <p className="max-w-xs mx-auto md:mx-0 text-slate-400 italic text-sm font-light">
-              "Kenyamanan bintang lima, kehangatan rumah sendiri. Desain estetik dengan sentuhan Gold-White di Banyuwangi."
-            </p>
-          </div>
-          <div className="space-y-3">
-            <h5 className="font-semibold text-white mb-4 underline decoration-[#D4AF37] decoration-2 underline-offset-4">Navigasi</h5>
-            <a href="#about" className="block text-slate-400 hover:text-[#D4AF37] text-sm">Tentang Kami</a>
-            <a href="#fasilitas" className="block text-slate-400 hover:text-[#D4AF37] text-sm">Fasilitas</a>
-            <a href="#pricelist" className="block text-slate-400 hover:text-[#D4AF37] text-sm">Harga</a>
-          </div>
-          <div className="space-y-3">
-            <h5 className="font-semibold text-white mb-4 underline decoration-[#D4AF37] decoration-2 underline-offset-4">Hubungi Kami</h5>
-            <p className="text-slate-400 text-sm flex items-start gap-3 justify-center md:justify-start">
-              <MapPin size={18} className={`${colors.gold} mt-0.5`} />
-              <span>Jl. Kemuning, Banyuwangi<br />Jawa Timur, Indonesia</span>
-            </p>
-            <p className="text-slate-400 text-sm flex items-center gap-3 justify-center md:justify-start">
-              <Phone size={18} className={`${colors.gold}`} />
-              <span>+62 812 3456 789</span>
-            </p>
+      <footer className="bg-slate-950 text-white pt-20 pb-10 px-6 mt-16 border-t-4 border-[#D4AF37] relative overflow-hidden">
+  {/* Dekorasi Cahaya Gold Halus di Sudut */}
+  <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#D4AF37] opacity-5 rounded-full blur-3xl"></div>
+
+  <div className="max-w-7xl mx-auto">
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      
+      {/* Kolom 1: Branding */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-2 justify-center md:justify-start">
+          <Award className={`${colors.gold}`} size={28} />
+          <h4 className="text-2xl font-bold tracking-tighter">Naila<span className={`${colors.gold}`}>Homestay</span></h4>
+        </div>
+        <p className="text-slate-400 italic text-sm font-light leading-relaxed">
+          "Ruang singgah pilihan untuk setiap perjalanan seru. Menghadirkan kenyamanan dan kehangatan di tengah indahnya Banyuwangi."
+        </p>
+        <div className="flex gap-4 justify-center md:justify-start">
+          {/* Kamu bisa tambah icon sosmed di sini */}
+          <div className={`p-2 rounded-lg bg-slate-900 border border-slate-800 ${colors.gold} hover:border-[#D4AF37] transition-colors cursor-pointer`}>
+            <Phone size={18} />
           </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-slate-800 text-center text-slate-600 text-xs tracking-wider">
-          &copy; {new Date().getFullYear()} NAILA HOMESTAY PRESTIGE. All rights reserved.
+      </div>
+
+      {/* Kolom 2: Navigasi Cepat */}
+      <div>
+        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Navigasi</h5>
+        <ul className="space-y-4">
+          <li><a href="#about" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Tentang Kami</a></li>
+          <li><a href="#fasilitas" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Fasilitas Ruang</a></li>
+          <li><a href="#pricelist" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Pilihan Kamar</a></li>
+          <li><a href="#ulasan" className="text-slate-400 hover:text-[#D4AF37] text-sm transition-colors">Cerita Tamu</a></li>
+        </ul>
+      </div>
+
+      {/* Kolom 3: Kontak Detail */}
+      <div className="space-y-6">
+        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Kontak</h5>
+        <div className="space-y-4">
+          <div className="flex items-start gap-4 text-slate-400 group">
+            <MapPin size={20} className={`${colors.gold} shrink-0`} />
+            <span className="text-sm group-hover:text-white transition-colors">Jl. Kemuning, Boyolangu, Banyuwangi, Jawa Timur</span>
+          </div>
+          <div className="flex items-center gap-4 text-slate-400 group">
+            <Phone size={20} className={`${colors.gold} shrink-0`} />
+            <span className="text-sm group-hover:text-white transition-colors">+62 812 3456 789</span>
+          </div>
         </div>
-      </footer>
+      </div>
+
+      {/* Kolom 4: Google Maps Embed */}
+      <div className="space-y-4">
+        <h5 className="font-bold text-white mb-6 uppercase tracking-widest text-xs">Lokasi Kami</h5>
+        <div className="w-full h-48 rounded-2xl overflow-hidden border-2 border-slate-800 hover:border-[#D4AF37]/50 transition-all shadow-lg">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126365.97732863355!2d114.21231764908845!3d-8.209111696176087!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd14500336151cf%3A0xbddbb11628b4abf8!2sNaila%20homestay!5e0!3m2!1sid!2sid!4v1777179241924!5m2!1sid!2sid" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen="" 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <p className="text-[10px] text-slate-500 text-center md:text-left italic">
+          Klik peta untuk petunjuk arah
+        </p>
+      </div>
+
+    </div>
+
+    {/* Baris Bawah */}
+    <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500 text-[10px] uppercase tracking-[0.2em]">
+      <p>&copy; {new Date().getFullYear()} Naila Homestay. Crafted with pride.</p>
+      <div className="flex gap-6">
+        <a href="#" className="hover:text-[#D4AF37]">Privacy Policy</a>
+        <a href="#" className="hover:text-[#D4AF37]">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
     </div>
   );
 }
